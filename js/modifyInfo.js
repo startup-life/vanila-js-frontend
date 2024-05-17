@@ -1,6 +1,6 @@
 import { checkEmail } from '../api/loginRequest.js';
-import Dialog from '../components/dialog/dialog.js';
-import Header from '../components/header/header.js';
+import Dialog from '../component/dialog/dialog.js';
+import Header from '../component/header/header.js';
 import {
     authCheck,
     prependChild,
