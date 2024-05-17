@@ -1,9 +1,9 @@
-import Dialog from '../components/dialog/dialog.js';
+import Dialog from '../component/dialog/dialog.js';
 
 export const getServerUrl = () => {
     const host = window.location.hostname;
     return host.includes('localhost')
-        ? 'http://localhost:80'
+        ? 'http://localhost:3000'
         : 'https://node-community-api.startupcode.kr:443';
 };
 

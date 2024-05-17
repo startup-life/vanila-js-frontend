@@ -1,6 +1,6 @@
 @import url('./common/layout.css');
-@import url('../components/header/header.css');
-@import url('../components/comment/comment.css');
+@import url('../component/header/header.css');
+@import url('../component/comment/comment.css');
 
 .blue {
     color: rgba(0, 153, 255, 1);
