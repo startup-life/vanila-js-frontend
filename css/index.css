@@ -1,6 +1,6 @@
 @import url('./common/layout.css');
-@import url('../components/board/boardItem.css');
-@import url('../components/header/header.css');
+@import url('../component/board/boardItem.css');
+@import url('../component/header/header.css');
 
 .boardList {
     width: 100%;

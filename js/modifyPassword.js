@@ -1,6 +1,6 @@
 import { changePassword } from '../api/modifyPasswordRequest.js';
-import Dialog from '../components/dialog/dialog.js';
-import Header from '../components/header/header.js';
+import Dialog from '../component/dialog/dialog.js';
+import Header from '../component/header/header.js';
 import {
     authCheck,
     deleteCookie,
@@ -8,7 +8,6 @@ import {
     prependChild,
     validPassword,
 } from '../utils/function.js';
-import { changePassword } from '../api/modifyPasswordRequest.js';
 
 const button = document.querySelector('#signupBtn');
 
@@ -78,6 +77,7 @@ const blurEventHandler = async (event, uid) => {
             helperElement.textContent = '*비밀번호가 다릅니다.';
         } else {
             helperElement.textContent = '';
+            modifyData.passwordCheck = value;
         }
     }
 
