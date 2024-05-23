@@ -9,6 +9,7 @@ import {
 import {
     createPost,
     fileUpload,
+    getBoardItem,
     updatePost,
 } from '../api/board-writeRequest.js';
 
@@ -101,6 +102,7 @@ const addBoard = async () => {
         }
     }
 };
+
 const changeEventHandler = async (event, uid) => {
     if (uid == 'title') {
         const value = event.target.value;
@@ -157,6 +159,7 @@ const changeEventHandler = async (event, uid) => {
 
     observeSignupData();
 };
+
 // 수정모드시 사용하는 게시글 단건 정보 가져오기
 const getBoardModifyData = async postId => {
     const response = await getBoardItem(postId);
