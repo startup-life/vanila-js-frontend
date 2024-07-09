@@ -28,7 +28,7 @@ export const updatePost = (postId, boardData) => {
 };
 
 export const fileUpload = formData => {
-    const result = fetch(getServerUrl() + '/posts/upload', {
+    const result = fetch(getServerUrl() + '/posts/upload/attach-file', {
         method: 'POST',
         body: formData,
     });

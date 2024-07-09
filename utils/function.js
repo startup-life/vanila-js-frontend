@@ -53,7 +53,7 @@ export const authCheck = async () => {
     const HTTP_OK = 200;
     const session = getCookie('session');
     if (session === undefined) {
-        Dialog('로그인이 필요합니다.', '로그인 페이지로 이동합니다.');
+        // Dialog('로그인이 필요합니다.', '로그인 페이지로 이동합니다.');
         location.href = '/html/login.html';
     }
 
@@ -62,7 +62,7 @@ export const authCheck = async () => {
     if (!data || data.status !== HTTP_OK) {
         deleteCookie('session');
         deleteCookie('userId');
-        Dialog('로그인이 필요합니다.', '로그인 페이지로 이동합니다.');
+        // Dialog('로그인이 필요합니다.', '로그인 페이지로 이동합니다.');
         location.href = '/html/login.html';
     }
     return data;

@@ -31,7 +31,7 @@ const getBoardDetail = async postId => {
         return new Error('게시글 정보를 가져오는데 실패하였습니다.');
 
     const data = await response.json();
-    return data.data[0];
+    return data.data;
 };
 
 const setBoardDetail = data => {
@@ -45,10 +45,11 @@ const setBoardDetail = data => {
     const date = new Date(data.created_at);
     const formattedDate = `${date.getFullYear()}-${padTo2Digits(date.getMonth() + 1)}-${padTo2Digits(date.getDate())} ${padTo2Digits(date.getHours())}:${padTo2Digits(date.getMinutes())}:${padTo2Digits(date.getSeconds())}`;
     createdAtElement.textContent = formattedDate;
+
     imgElement.src =
-        data.profileImage !== undefined
-            ? `${getServerUrl()}${data.profileImage}`
-            : `${getServerUrl()}${DEFAULT_PROFILE_IMAGE}`;
+        data.profileImage === undefined || data.profileImage === null
+            ? `${getServerUrl()}${DEFAULT_PROFILE_IMAGE}`
+            : `${getServerUrl()}${data.profileImage}`;
 
     nicknameElement.textContent = data.nickname;
 
@@ -194,6 +195,7 @@ const init = async () => {
         const pageId = getQueryString('id');
 
         const pageData = await getBoardDetail(pageId);
+
         if (parseInt(pageData.user_id, 10) === parseInt(myInfo.userId, 10)) {
             setBoardModify(pageData, myInfo);
         }

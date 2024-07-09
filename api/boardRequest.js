@@ -2,6 +2,7 @@ import { getServerUrl, getCookie } from '../utils/function.js';
 
 export const getPost = postId => {
     const result = fetch(`${getServerUrl()}/posts/${postId}`, {
+        method: 'GET',
         headers: {
             session: getCookie('session'),
             userid: getCookie('userId'),
