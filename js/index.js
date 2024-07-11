@@ -1,9 +1,9 @@
 import BoardItem from '../component/board/boardItem.js';
 import Header from '../component/header/header.js';
-import { authCheck, getServerS3Url, prependChild } from '../utils/function.js';
+import { authCheck, prependChild } from '../utils/function.js';
 import { getPosts } from '../api/indexRequest.js';
 
-const DEFAULT_PROFILE_IMAGE = '/public/image/profile/default.jpg';
+const DEFAULT_PROFILE_IMAGE = 'https://express-backend.s3.ap-northeast-2.amazonaws.com/public/image/profile/default.jpg';
 const HTTP_NOT_AUTHORIZED = 401;
 const SCROLL_THRESHOLD = 0.9;
 const INITIAL_OFFSET = 5;
@@ -82,7 +82,7 @@ const init = async () => {
 
         const profileImagePath =
             data.data.profileImagePath ?? DEFAULT_PROFILE_IMAGE;
-        const fullProfileImagePath = `${getServerS3Url()}${profileImagePath}`;
+        const fullProfileImagePath = `${profileImagePath}`;
         prependChild(
             document.body,
             Header('Community', 0, fullProfileImagePath),
