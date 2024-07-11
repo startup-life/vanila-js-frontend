@@ -32,6 +32,8 @@ const boardWrite = {
     content: '',
 };
 
+const DEFAULT_PROFILE_IMAGE = 'https://express-backend.s3.ap-northeast-2.amazonaws.com/public/image/profile/default.jpg';
+
 let isModifyMode = false;
 let modifyData = {};
 
@@ -234,7 +236,7 @@ const init = async () => {
 
     const profileImage =
         data.data.profileImagePath === undefined
-            ? `/public/image/profile/default.jpg`
+            ? `${DEFAULT_PROFILE_IMAGE}`
             : `${data.data.profileImagePath}`;
 
     prependChild(document.body, Header('커뮤니티', 1, profileImage));
