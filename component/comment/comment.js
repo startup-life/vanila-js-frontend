@@ -95,8 +95,8 @@ const CommentItem = (data, writerId, postId, commentId) => {
     const img = document.createElement('img');
     img.className = 'commentImg';
     img.src =
-        `${getServerUrl()}${data.profileImage}` ||
-        `${getServerUrl()}${DEFAULT_PROFILE_IMAGE}`;
+        `${getServerS3Url()}${data.profileImage}` ||
+        `${getServerS3Url()}${DEFAULT_PROFILE_IMAGE}`;
     picture.appendChild(img);
 
     const commentInfoWrap = document.createElement('div');

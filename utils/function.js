@@ -7,6 +7,13 @@ export const getServerUrl = () => {
         : 'https://aws-edu-api.startupcode.kr:443';
 };
 
+export const getServerS3Url = () => {
+    const host = window.location.hostname;
+    return host.includes('localhost')
+        ? 'http://localhost:3000'
+        : 'https://express-backend.s3.ap-northeast-2.amazonaws.com';
+}
+
 export const setCookie = (cookie_name, value, days) => {
     const exdate = new Date();
     exdate.setDate(exdate.getDate() + days);

@@ -1,6 +1,6 @@
 import BoardItem from '../component/board/boardItem.js';
 import Header from '../component/header/header.js';
-import { authCheck, getServerUrl, prependChild } from '../utils/function.js';
+import { authCheck, getServerS3Url, prependChild } from '../utils/function.js';
 import { getPosts } from '../api/indexRequest.js';
 
 const DEFAULT_PROFILE_IMAGE = '/public/image/profile/default.jpg';
@@ -82,7 +82,7 @@ const init = async () => {
 
         const profileImagePath =
             data.data.profileImagePath ?? DEFAULT_PROFILE_IMAGE;
-        const fullProfileImagePath = `${getServerUrl()}${profileImagePath}`;
+        const fullProfileImagePath = `${getServerS3Url()}${profileImagePath}`;
         prependChild(
             document.body,
             Header('Community', 0, fullProfileImagePath),

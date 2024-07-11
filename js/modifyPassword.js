@@ -4,7 +4,7 @@ import Header from '../component/header/header.js';
 import {
     authCheck,
     deleteCookie,
-    getServerUrl,
+    getServerS3Url,
     prependChild,
     validPassword,
 } from '../utils/function.js';
@@ -18,8 +18,8 @@ const data = await authCheck();
 const userId = data.data.userId;
 const profileImage =
     data.data.profileImagePath === undefined
-        ? `${getServerUrl()}${DEFAULT_PROFILE_IMAGE}`
-        : `${getServerUrl()}${data.data.profileImagePath}`;
+        ? `${getServerS3Url()}${DEFAULT_PROFILE_IMAGE}`
+        : `${getServerS3Url()}${data.data.profileImagePath}`;
 
 const modifyData = {
     password: '',

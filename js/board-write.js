@@ -3,7 +3,7 @@ import Header from '../component/header/header.js';
 import {
     authCheck,
     getQueryString,
-    getServerUrl,
+    getServerS3Url,
     prependChild,
 } from '../utils/function.js';
 import {
@@ -208,7 +208,7 @@ const setModifyData = data => {
         // 이제 추출된 파일명을 사용하여 File 객체를 생성
         const attachFile = new File(
             // 실제 이미지 데이터 대신 URL을 사용
-            [`${getServerUrl()}${data.filePath}`],
+            [`${getServerS3Url()}${data.filePath}`],
             // 추출된 파일명
             fileName,
             // MIME 타입 지정, 실제 이미지 타입에 맞게 조정 필요
@@ -235,8 +235,8 @@ const init = async () => {
 
     const profileImage =
         data.data.profileImagePath === undefined
-            ? `${getServerUrl()}/public/image/profile/default.jpg`
-            : getServerUrl() + data.data.profileImagePath;
+            ? `${getServerS3Url()}/public/image/profile/default.jpg`
+            : `${getServerS3Url()}${data.data.profileImagePath}`;
 
     prependChild(document.body, Header('커뮤니티', 1, profileImage));
 

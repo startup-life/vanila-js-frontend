@@ -3,10 +3,10 @@ import Dialog from '../component/dialog/dialog.js';
 import Header from '../component/header/header.js';
 import {
     authCheck,
-    getCookie,
     getServerUrl,
     prependChild,
     padTo2Digits,
+    getServerS3Url,
 } from '../utils/function.js';
 import {
     getPost,
@@ -48,8 +48,8 @@ const setBoardDetail = data => {
 
     imgElement.src =
         data.profileImage === undefined || data.profileImage === null
-            ? `${getServerUrl()}${DEFAULT_PROFILE_IMAGE}`
-            : `${getServerUrl()}${data.profileImage}`;
+            ? `${getServerS3Url()}${DEFAULT_PROFILE_IMAGE}`
+            : `${getServerS3Url()}${data.profileImage}`;
 
     nicknameElement.textContent = data.nickname;
 
@@ -187,8 +187,8 @@ const init = async () => {
         }
         const profileImage =
             data.data.profileImagePath === undefined
-                ? `${getServerUrl()}${DEFAULT_PROFILE_IMAGE}`
-                : `${getServerUrl()}${data.data.profileImagePath}`;
+                ? `${getServerS3Url()}${DEFAULT_PROFILE_IMAGE}`
+                : `${getServerS3Url()}${data.data.profileImagePath}`;
 
         prependChild(document.body, Header('커뮤니티', 2, profileImage));
 

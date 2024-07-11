@@ -5,6 +5,7 @@ import {
     authCheck,
     prependChild,
     getServerUrl,
+    getServerS3Url,
     getCookie,
     deleteCookie,
     validNickname,
@@ -36,16 +37,16 @@ const setData = data => {
         data.profileImagePath === DEFAULT_PROFILE_IMAGE ||
         data.profileImagePath === null
     ) {
-        profilePreview.src = `${getServerUrl()}${DEFAULT_PROFILE_IMAGE}`;
+        profilePreview.src = `${getServerS3Url()}${DEFAULT_PROFILE_IMAGE}`;
     } else {
-        profilePreview.src = `${getServerUrl()}${data.profileImagePath}`;
+        profilePreview.src = `${getServerS3Url()}${data.profileImagePath}`;
 
         const profileImagePath = data.profileImagePath;
         const fileName = profileImagePath.split('/').pop();
         localStorage.setItem('profilePath', data.profileImagePath);
 
         const profileImage = new File(
-            [`${getServerUrl()}${profileImagePath}`],
+            [`${getServerS3Url()}${profileImagePath}`],
             fileName,
             { type: '' },
         );
@@ -113,7 +114,7 @@ const changeEventHandler = async (event, uid) => {
         console.log(changeData.profileImagePath);
         if (!file) {
             localStorage.removeItem('profilePath');
-            profilePreview.src = `${getServerUrl()}${DEFAULT_PROFILE_IMAGE}`;
+            profilePreview.src = `${getServerS3Url()}${DEFAULT_PROFILE_IMAGE}`;
             changeData.profileImagePath = null;
         } else {
             const formData = new FormData();
@@ -245,8 +246,8 @@ const displayToastFromStorage = () => {
 const init = () => {
     const profileImage =
         authData.data.profileImagePath === undefined
-            ? `${getServerUrl()}${DEFAULT_PROFILE_IMAGE}`
-            : `${getServerUrl()}${authData.data.profileImagePath}`;
+            ? `${getServerS3Url()}${DEFAULT_PROFILE_IMAGE}`
+            : `${getServerS3Url()}${authData.data.profileImagePath}`;
 
     prependChild(document.body, Header('커뮤니티', 2, profileImage));
     setData(authData.data);
