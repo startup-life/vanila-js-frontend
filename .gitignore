@@ -4,9 +4,7 @@ node_modules/
 
 .DS_Store
 
-web_project/frontend/.env
-
-web_project/backend/.env
+.env
 
 .idea/
 
