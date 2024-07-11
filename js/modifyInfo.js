@@ -131,7 +131,7 @@ const changeEventHandler = async (event, uid) => {
                 const result = await response.json(); // 응답을 JSON으로 변환
                 localStorage.setItem('profilePath', result.data.filePath);
                 changeData.profileImagePath = result.data.filePath;
-                profilePreview.src = `${getServerUrl()}${result.data.filePath}`;
+                profilePreview.src = `${result.data.filePath}`;
             } catch (error) {
                 console.error('업로드 중 오류 발생:', error);
             }

@@ -57,7 +57,7 @@ const setBoardDetail = data => {
     if (data.filePath) {
         console.log(data.filePath);
         const img = document.createElement('img');
-        img.src = `${getServerUrl()}${data.filePath}`;
+        img.src = `${data.filePath}`;
         contentImgElement.appendChild(img);
     }
     const contentElement = document.querySelector('.content');
