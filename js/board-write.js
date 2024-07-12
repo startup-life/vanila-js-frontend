@@ -236,7 +236,7 @@ const init = async () => {
     const profileImage =
         data.data.profileImagePath === undefined
             ? `${getServerUrl()}/public/image/profile/default.jpg`
-            : getServerUrl() + data.data.profileImagePath;
+            : `${getServerUrl()}${data.data.profileImagePath}`;
 
     prependChild(document.body, Header('커뮤니티', 1, profileImage));
 

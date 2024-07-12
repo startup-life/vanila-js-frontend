@@ -4,11 +4,7 @@ import { dirname } from 'path';
 
 const app = express();
 
-let port = 80;
-console.log(process.env.NODE_ENV);
-if (process.env.NODE_ENV === 'development') {
-    port = 8080;
-}
+const port = 80;
 
 // 현재 파일의 URL에서 디렉토리 경로를 추출
 const __filename = fileURLToPath(import.meta.url);
