@@ -238,7 +238,7 @@ const uploadProfileImage = () => {
             }
 
             const formData = new FormData();
-            formData.append('attachFile', file);
+            formData.append('profileImage', file);
 
             // 파일 업로드를 위한 POST 요청 실행
             try {

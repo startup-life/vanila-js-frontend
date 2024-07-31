@@ -3,7 +3,6 @@ import Dialog from '../component/dialog/dialog.js';
 import Header from '../component/header/header.js';
 import {
     authCheck,
-    getCookie,
     getServerUrl,
     prependChild,
     padTo2Digits,
@@ -15,7 +14,7 @@ import {
     getComments,
 } from '../api/boardRequest.js';
 
-const DEFAULT_PROFILE_IMAGE = '/public/image/profile/default.jpg';
+const DEFAULT_PROFILE_IMAGE = 'https://express-backend.s3.ap-northeast-2.amazonaws.com/public/image/profile/default.jpg';
 const MAX_COMMENT_LENGTH = 1000;
 const HTTP_NOT_AUTHORIZED = 401;
 const HTTP_OK = 200;
@@ -48,8 +47,8 @@ const setBoardDetail = data => {
 
     imgElement.src =
         data.profileImage === undefined || data.profileImage === null
-            ? `${getServerUrl()}${DEFAULT_PROFILE_IMAGE}`
-            : `${getServerUrl()}${data.profileImage}`;
+            ? `${DEFAULT_PROFILE_IMAGE}`
+            : `${data.profileImage}`;
 
     nicknameElement.textContent = data.nickname;
 
@@ -58,7 +57,7 @@ const setBoardDetail = data => {
     if (data.filePath) {
         console.log(data.filePath);
         const img = document.createElement('img');
-        img.src = getServerUrl() + data.filePath;
+        img.src = `${data.filePath}`;
         contentImgElement.appendChild(img);
     }
     const contentElement = document.querySelector('.content');
@@ -187,8 +186,8 @@ const init = async () => {
         }
         const profileImage =
             data.data.profileImagePath === undefined
-                ? `${getServerUrl()}${DEFAULT_PROFILE_IMAGE}`
-                : `${getServerUrl()}${data.data.profileImagePath}`;
+                ? `${DEFAULT_PROFILE_IMAGE}`
+                : `${data.data.profileImagePath}`;
 
         prependChild(document.body, Header('커뮤니티', 2, profileImage));
 
