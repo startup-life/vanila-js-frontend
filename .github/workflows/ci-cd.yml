@@ -36,23 +36,35 @@ jobs:
   deploy:
     needs: build
     runs-on: ubuntu-latest
-    env:
-      SERVER_STATUS: ${{ secrets.SERVER_STATUS }}
-    if: github.ref == 'refs/heads/main' && success() && env.SERVER_STATUS == 'true'
+    if: github.ref == 'refs/heads/main' && success()
 
     steps:
+      - name: Check Server Status
+        id: check_status
+        run: |
+          if [ "${{ secrets.SERVER_STATUS }}" == "true" ]; then
+            echo "::set-output name=status::true"
+          else
+            echo "::set-output name=status::false"
+          fi
+
       - name: Checkout repository
+        if: steps.check_status.outputs.status == 'true'
         uses: actions/checkout@v2
 
       - name: Set up Node.js
+        if: steps.check_status.outputs.status == 'true'
         uses: actions/setup-node@v2
         with:
           node-version: '20.x'
 
+      # 나머지 스텝들도 동일한 if 조건을 추가합니다.
       - name: Install dependencies
+        if: steps.check_status.outputs.status == 'true'
         run: npm install
 
       - name: Prepare SSH Key
+        if: steps.check_status.outputs.status == 'true'
         run: |
           mkdir -p ~/.ssh
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
@@ -60,11 +72,12 @@ jobs:
           ssh-keyscan -H ${{ secrets.SERVER_HOST }} >> ~/.ssh/known_hosts
 
       - name: Deploy to EC2
+        if: steps.check_status.outputs.status == 'true'
         run: |
           ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} << 'EOF'
           export NVM_DIR="$HOME/.nvm"
-          [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
-          [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
+          [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+          [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
           nvm use 20
           cd /home/${{ secrets.SERVER_USER }}/frontend
           git checkout -b main
