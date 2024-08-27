@@ -36,7 +36,9 @@ jobs:
   deploy:
     needs: build
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main' && success() && secrets.SERVER_STATUS == 'true'
+    env:
+      SERVER_STATUS: ${{ secrets.SERVER_STATUS }}
+    if: github.ref == 'refs/heads/main' && success() && env.SERVER_STATUS == 'true'
 
     steps:
       - name: Checkout repository
