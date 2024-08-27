@@ -1,6 +1,7 @@
-import { deleteCookie, getCookie, getServerUrl } from '../../utils/function.js';
+import { deleteCookie, getCookie } from '../../utils/function.js';
 
-const DEFAULT_PROFILE_IMAGE = 'https://express-backend.s3.ap-northeast-2.amazonaws.com/public/image/profile/default.jpg';
+const DEFAULT_PROFILE_IMAGE =
+    'https://express-backend.s3.ap-northeast-2.amazonaws.com/public/image/profile/default.jpg';
 
 const headerDropdownMenu = () => {
     const wrap = document.createElement('div');
@@ -36,12 +37,12 @@ const headerDropdownMenu = () => {
 const Header = (
     title,
     leftBtn = 0,
-    profileImage = `${DEFAULT_PROFILE_IMAGE}`,
+    profileImage = `${DEFAULT_PROFILE_IMAGE}`
 ) => {
     let leftBtnElement;
     let rightBtnElement;
-    let headerElement;
-    let h1Element;
+    // let headerElement;
+    // let h1Element;
 
     if (leftBtn == 1 || leftBtn == 2) {
         leftBtnElement = document.createElement('img');
@@ -52,7 +53,7 @@ const Header = (
         } else {
             leftBtnElement.addEventListener(
                 'click',
-                () => (location.href = '/'),
+                () => (location.href = '/')
             );
         }
     }
@@ -80,10 +81,10 @@ const Header = (
         }
     }
 
-    h1Element = document.createElement('h1');
+    const h1Element = document.createElement('h1');
     h1Element.textContent = title;
 
-    headerElement = document.createElement('header');
+    const headerElement = document.createElement('header');
 
     if (leftBtnElement) headerElement.appendChild(leftBtnElement);
     headerElement.appendChild(h1Element);
@@ -92,7 +93,7 @@ const Header = (
     return headerElement;
 };
 
-window.addEventListener('click', e => {
+window.addEventListener('click', () => {
     const dropMenu = document.querySelector('.drop');
     if (dropMenu && !dropMenu.classList.contains('none')) {
         dropMenu.classList.add('none');

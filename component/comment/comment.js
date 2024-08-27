@@ -1,8 +1,9 @@
-import { getServerUrl, padTo2Digits } from '../../utils/function.js';
+import { padTo2Digits } from '../../utils/function.js';
 import Dialog from '../dialog/dialog.js';
 import { deleteComment, updateComment } from '../../api/commentRequest.js';
 
-const DEFAULT_PROFILE_IMAGE = 'https://express-backend.s3.ap-northeast-2.amazonaws.com/public/image/profile/default.jpg';
+const DEFAULT_PROFILE_IMAGE =
+    'https://express-backend.s3.ap-northeast-2.amazonaws.com/public/image/profile/default.jpg';
 const HTTP_OK = 200;
 
 const CommentItem = (data, writerId, postId, commentId) => {
@@ -19,8 +20,8 @@ const CommentItem = (data, writerId, postId, commentId) => {
 
                 const responseData = await response.json();
                 if (responseData.status === HTTP_OK)
-                    location.href = '/html/board.html?id=' + postId;
-            },
+                    location.href = `/html/board.html?id=${postId}`;
+            }
         );
     };
 
@@ -63,9 +64,9 @@ const CommentItem = (data, writerId, postId, commentId) => {
 
             const response = await updateComment(postId, commentId, sendData);
             if (!response.ok)
-                return Dialog('수정 실패', '댓글 수정에 실패하였습니다.');
+                Dialog('수정 실패', '댓글 수정에 실패하였습니다.');
 
-            location.href = '/html/board.html?id=' + postId;
+            location.href = `/html/board.html?id=${postId}`;
         };
 
         // 취소 버튼 생성 및 설정
@@ -94,9 +95,7 @@ const CommentItem = (data, writerId, postId, commentId) => {
 
     const img = document.createElement('img');
     img.className = 'commentImg';
-    img.src =
-        `${data.profileImage}` ||
-        `${DEFAULT_PROFILE_IMAGE}`;
+    img.src = `${data.profileImage}` || `${DEFAULT_PROFILE_IMAGE}`;
     picture.appendChild(img);
 
     const commentInfoWrap = document.createElement('div');

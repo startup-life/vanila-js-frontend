@@ -9,7 +9,7 @@ export const deleteComment = (postId, commentId) => {
                 session: getCookie('session'),
                 userid: getCookie('userId'),
             },
-        },
+        }
     );
     return result;
 };
@@ -25,7 +25,7 @@ export const updateComment = (postId, commentId, commentContent) => {
                 userid: getCookie('userId'),
             },
             body: JSON.stringify(commentContent),
-        },
+        }
     );
     return result;
 };

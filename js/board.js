@@ -1,12 +1,7 @@
 import CommentItem from '../component/comment/comment.js';
 import Dialog from '../component/dialog/dialog.js';
 import Header from '../component/header/header.js';
-import {
-    authCheck,
-    getServerUrl,
-    prependChild,
-    padTo2Digits,
-} from '../utils/function.js';
+import { authCheck, prependChild, padTo2Digits } from '../utils/function.js';
 import {
     getPost,
     deletePost,
@@ -14,17 +9,18 @@ import {
     getComments,
 } from '../api/boardRequest.js';
 
-const DEFAULT_PROFILE_IMAGE = 'https://express-backend.s3.ap-northeast-2.amazonaws.com/public/image/profile/default.jpg';
+const DEFAULT_PROFILE_IMAGE =
+    'https://express-backend.s3.ap-northeast-2.amazonaws.com/public/image/profile/default.jpg';
 const MAX_COMMENT_LENGTH = 1000;
 const HTTP_NOT_AUTHORIZED = 401;
 const HTTP_OK = 200;
 
-const getQueryString = name => {
+const getQueryString = (name) => {
     const urlParams = new URLSearchParams(window.location.search);
     return urlParams.get(name);
 };
 
-const getBoardDetail = async postId => {
+const getBoardDetail = async (postId) => {
     const response = await getPost(postId);
     if (!response.ok)
         return new Error('게시글 정보를 가져오는데 실패하였습니다.');
@@ -33,7 +29,7 @@ const getBoardDetail = async postId => {
     return data.data;
 };
 
-const setBoardDetail = data => {
+const setBoardDetail = (data) => {
     // 헤드 정보
     const titleElement = document.querySelector('.title');
     const createdAtElement = document.querySelector('.createdAt');
@@ -96,7 +92,7 @@ const setBoardModify = async (data, myInfo) => {
                     } else {
                         Dialog('삭제 실패', '게시글 삭제에 실패하였습니다.');
                     }
-                },
+                }
             );
         });
 
@@ -107,7 +103,7 @@ const setBoardModify = async (data, myInfo) => {
     }
 };
 
-const getBoardComment = async id => {
+const getBoardComment = async (id) => {
     const response = await getComments(id);
     if (!response.ok) return [];
     const data = await response.json();
@@ -118,12 +114,12 @@ const getBoardComment = async id => {
 const setBoardComment = (data, myInfo) => {
     const commentListElement = document.querySelector('.commentList');
     if (commentListElement) {
-        data.map(event => {
+        data.map((event) => {
             const item = CommentItem(
                 event,
                 myInfo.userId,
                 event.post_id,
-                event.comment_id,
+                event.comment_id
             );
             commentListElement.appendChild(item);
         });
@@ -145,14 +141,14 @@ const addComment = async () => {
 
 const inputComment = async () => {
     const textareaElement = document.querySelector(
-        '.commentInputWrap textarea',
+        '.commentInputWrap textarea'
     );
     const commentBtnElement = document.querySelector('.commentInputBtn');
 
     if (textareaElement.value.length > MAX_COMMENT_LENGTH) {
         textareaElement.value = textareaElement.value.substring(
             0,
-            MAX_COMMENT_LENGTH,
+            MAX_COMMENT_LENGTH
         );
     }
     if (textareaElement.value === '') {
@@ -174,7 +170,7 @@ const init = async () => {
         const myInfo = myInfoResult.data;
         const commentBtnElement = document.querySelector('.commentInputBtn');
         const textareaElement = document.querySelector(
-            '.commentInputWrap textarea',
+            '.commentInputWrap textarea'
         );
         textareaElement.addEventListener('input', inputComment);
         commentBtnElement.addEventListener('click', addComment);
@@ -200,7 +196,7 @@ const init = async () => {
         }
         setBoardDetail(pageData);
 
-        getBoardComment(pageId).then(data => setBoardComment(data, myInfo));
+        getBoardComment(pageId).then((data) => setBoardComment(data, myInfo));
     } catch (error) {
         console.error(error);
     }

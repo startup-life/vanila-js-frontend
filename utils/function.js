@@ -1,4 +1,4 @@
-import Dialog from '../component/dialog/dialog.js';
+// import Dialog from '../component/dialog/dialog.js';
 
 export const getServerUrl = () => {
     const host = window.location.hostname;
@@ -18,7 +18,7 @@ export const setCookie = (cookie_name, value, days) => {
     document.cookie = `${cookie_name}=${cookie_value}`;
 };
 
-export const getCookie = cookie_name => {
+export const getCookie = (cookie_name) => {
     let x;
     let y;
     const val = document.cookie.split(';');
@@ -33,7 +33,7 @@ export const getCookie = cookie_name => {
     }
 };
 
-export const deleteCookie = cookie_name => {
+export const deleteCookie = (cookie_name) => {
     setCookie(cookie_name, '', -1);
 };
 
@@ -78,19 +78,19 @@ export const authCheckReverse = async () => {
     }
 };
 // 이메일 유효성 검사
-export const validEmail = email => {
+export const validEmail = (email) => {
     const REGEX =
         /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
     return REGEX.test(email);
 };
 
-export const validPassword = password => {
+export const validPassword = (password) => {
     const REGEX =
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$/;
     return REGEX.test(password);
 };
 
-export const validNickname = nickname => {
+export const validNickname = (nickname) => {
     const REGEX = /^[가-힣a-zA-Z0-9]{2,10}$/;
     return REGEX.test(nickname);
 };
@@ -110,7 +110,7 @@ export const fileToBase64 = (file, isHigh) => {
         const size = isHigh ? 1 : 4;
         const reader = new FileReader();
         reader.readAsDataURL(file);
-        reader.onload = e => {
+        reader.onload = (e) => {
             const img = new Image();
             img.src = e.target.result;
             img.onload = () => {
@@ -123,11 +123,11 @@ export const fileToBase64 = (file, isHigh) => {
                 ctx.drawImage(img, 0, 0, width, height);
                 resolve(ctx.canvas.toDataURL());
             };
-            img.onerror = e => {
+            img.onerror = (e) => {
                 reject(e);
             };
         };
-        reader.onerror = e => {
+        reader.onerror = (e) => {
             reject(e);
         };
     });
@@ -138,11 +138,11 @@ export const fileToBase64 = (file, isHigh) => {
  * @param {string} param
  * @returns
  */
-export const getQueryString = param => {
+export const getQueryString = (param) => {
     const params = new URLSearchParams(window.location.search);
     return params.get(param);
 };
 
-export const padTo2Digits = number => {
+export const padTo2Digits = (number) => {
     return number.toString().padStart(2, '0');
 };
