@@ -27,7 +27,7 @@ const loginClick = async () => {
     if (!response.ok) {
         updateHelperText(
             helperTextElement,
-            '*입력하신 계정 정보가 정확하지 않았습니다.',
+            '*입력하신 계정 정보가 정확하지 않았습니다.'
         );
         return;
     }
@@ -36,7 +36,7 @@ const loginClick = async () => {
     if (result.status !== HTTP_OK) {
         updateHelperText(
             helperTextElement,
-            '*입력하신 계정 정보가 정확하지 않았습니다.',
+            '*입력하신 계정 정보가 정확하지 않았습니다.'
         );
         return;
     }
@@ -57,7 +57,7 @@ const observeSignupData = () => {
         helperTextElement,
         isValidEmail || !email
             ? ''
-            : '*올바른 이메일 주소 형식을 입력해주세요. (예: example@example.com)',
+            : '*올바른 이메일 주소 형식을 입력해주세요. (예: example@example.com)'
     );
 
     button.disabled = !(
@@ -72,28 +72,27 @@ const observeSignupData = () => {
 const eventSet = () => {
     document.getElementById('login').addEventListener('click', loginClick);
 
-    document.addEventListener('keypress', event => {
+    document.addEventListener('keypress', (event) => {
         if (event.key === 'Enter') {
             loginClick();
         }
     });
-
-    ['id', 'pw'].forEach(field => {
+    ['id', 'pw'].forEach((field) => {
         const inputElement = document.getElementById(field);
-        inputElement.addEventListener('input', event =>
-            onChangeHandler(event, field === 'id' ? 'id' : 'password'),
+        inputElement.addEventListener('input', (event) =>
+            onChangeHandler(event, field === 'id' ? 'id' : 'password')
         );
 
         if (field === 'id') {
-            inputElement.addEventListener('focusout', event =>
-                lottieAnimation(validEmail(event.target.value) ? 1 : 2),
+            inputElement.addEventListener('focusout', (event) =>
+                lottieAnimation(validEmail(event.target.value) ? 1 : 2)
             );
         }
     });
 
     document
         .getElementById('id')
-        .addEventListener('input', event => validateEmail(event.target));
+        .addEventListener('input', (event) => validateEmail(event.target));
 };
 
 const onChangeHandler = (event, uid) => {
@@ -101,13 +100,14 @@ const onChangeHandler = (event, uid) => {
     observeSignupData();
 };
 
-const validateEmail = input => {
+const validateEmail = (input) => {
     const regex = /^[A-Za-z0-9@.]+$/;
-    if (!regex.test(input.value)) input.value = input.value.slice(0, -1);
+    if (!regex.test(input.value))
+        return (input.value = input.value.slice(0, -1));
 };
 
 let lottieInstance = null;
-const lottieAnimation = type => {
+const lottieAnimation = (type) => {
     const container = document.getElementById('lottie-animation');
     const animationPaths = [
         '/public/check_anim.json',

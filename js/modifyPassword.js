@@ -1,4 +1,4 @@
-import { changePassword } from '../api/modifyPasswordRequest.js';
+import changePassword from '../api/modifyPasswordRequest.js';
 import Dialog from '../component/dialog/dialog.js';
 import Header from '../component/header/header.js';
 import {
@@ -10,11 +10,12 @@ import {
 
 const button = document.querySelector('#signupBtn');
 
-const DEFAULT_PROFILE_IMAGE = 'https://express-backend.s3.ap-northeast-2.amazonaws.com/public/image/profile/default.jpg';
+const DEFAULT_PROFILE_IMAGE =
+    'https://express-backend.s3.ap-northeast-2.amazonaws.com/public/image/profile/default.jpg';
 const HTTP_CREATED = 201;
 
-const data = await authCheck();
-const userId = data.data.userId;
+const data = authCheck();
+const { userId } = data.data;
 const profileImage =
     data.data.profileImagePath === undefined
         ? `${DEFAULT_PROFILE_IMAGE}`
@@ -40,13 +41,13 @@ const observeData = () => {
 
 const blurEventHandler = async (event, uid) => {
     if (uid == 'pw') {
-        const value = event.target.value;
+        const { value } = event.target;
         const isValidPassword = validPassword(value);
         const helperElement = document.querySelector(
-            `.inputBox p[name="${uid}"]`,
+            `.inputBox p[name="${uid}"]`
         );
         const helperElementCheck = document.querySelector(
-            `.inputBox p[name="pwck"]`,
+            `.inputBox p[name="pwck"]`
         );
 
         if (!helperElement) return;
@@ -63,12 +64,12 @@ const blurEventHandler = async (event, uid) => {
             modifyData.password = value;
         }
     } else if (uid == 'pwck') {
-        const value = event.target.value;
+        const { value } = event.target;
         const helperElement = document.querySelector(
-            `.inputBox p[name="${uid}"]`,
+            `.inputBox p[name="${uid}"]`
         );
         // pw 입력란의 현재 값
-        const password = modifyData.password;
+        const { password } = modifyData;
 
         if (value == '' || value == null) {
             helperElement.textContent = '*비밀번호 한번 더 입력해주세요.';
@@ -85,10 +86,12 @@ const blurEventHandler = async (event, uid) => {
 
 const addEventForInputElements = () => {
     const InputElement = document.querySelectorAll('input');
-    InputElement.forEach(element => {
-        const id = element.id;
+    InputElement.forEach((element) => {
+        const { id } = element;
 
-        element.addEventListener('input', event => blurEventHandler(event, id));
+        element.addEventListener('input', (event) =>
+            blurEventHandler(event, id)
+        );
     });
 };
 

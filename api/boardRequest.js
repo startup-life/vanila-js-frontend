@@ -1,6 +1,6 @@
 import { getServerUrl, getCookie } from '../utils/function.js';
 
-export const getPost = postId => {
+export const getPost = (postId) => {
     const result = fetch(`${getServerUrl()}/posts/${postId}`, {
         method: 'GET',
         headers: {
@@ -12,7 +12,7 @@ export const getPost = postId => {
     return result;
 };
 
-export const deletePost = async postId => {
+export const deletePost = async (postId) => {
     const result = await fetch(`${getServerUrl()}/posts/${postId}`, {
         method: 'DELETE',
         headers: {
@@ -36,7 +36,7 @@ export const writeComment = async (pageId, comment) => {
     return result;
 };
 
-export const getComments = async postId => {
+export const getComments = async (postId) => {
     const result = await fetch(`${getServerUrl()}/posts/${postId}/comments`, {
         headers: {
             session: getCookie('session'),

@@ -13,7 +13,7 @@ export const userModify = async (userId, changeData) => {
     return result;
 };
 
-export const userDelete = async userId => {
+export const userDelete = async (userId) => {
     const result = await fetch(`${getServerUrl()}/users/${userId}`, {
         method: 'DELETE',
         headers: {
