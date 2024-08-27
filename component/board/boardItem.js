@@ -33,7 +33,6 @@ const BoardItem = (
     const seconds = dateObj.getSeconds();
 
     const formattedDate = `${year}-${padTo2Digits(month)}-${padTo2Digits(day)} ${padTo2Digits(hours)}:${padTo2Digits(minutes)}:${padTo2Digits(seconds)}`;
-    const API_HOST = getServerUrl();
 
     return `
     <a href="/html/board.html?id=${postId}">
@@ -47,7 +46,7 @@ const BoardItem = (
             </div>
             <div class="writerInfo">
             <picture class="img">
-                <img src="${`${API_HOST}${imgUrl}`}" alt="img">
+                <img src="${`${imgUrl}`}" alt="img">
             </picture>
             <h2 class="writer">${writer}</h2>
         </div>

@@ -1,6 +1,6 @@
 import { deleteCookie, getCookie, getServerUrl } from '../../utils/function.js';
 
-const DEFAULT_PROFILE_IMAGE = '/public/image/profile/default.jpg';
+const DEFAULT_PROFILE_IMAGE = 'https://express-backend.s3.ap-northeast-2.amazonaws.com/public/image/profile/default.jpg';
 
 const headerDropdownMenu = () => {
     const wrap = document.createElement('div');
@@ -36,7 +36,7 @@ const headerDropdownMenu = () => {
 const Header = (
     title,
     leftBtn = 0,
-    profileImage = `${getServerUrl()}${DEFAULT_PROFILE_IMAGE}`,
+    profileImage = `${DEFAULT_PROFILE_IMAGE}`,
 ) => {
     let leftBtnElement;
     let rightBtnElement;

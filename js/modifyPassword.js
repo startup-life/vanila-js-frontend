@@ -4,22 +4,21 @@ import Header from '../component/header/header.js';
 import {
     authCheck,
     deleteCookie,
-    getServerUrl,
     prependChild,
     validPassword,
 } from '../utils/function.js';
 
 const button = document.querySelector('#signupBtn');
 
-const DEFAULT_PROFILE_IMAGE = '/public/image/profile/default.jpg';
+const DEFAULT_PROFILE_IMAGE = 'https://express-backend.s3.ap-northeast-2.amazonaws.com/public/image/profile/default.jpg';
 const HTTP_CREATED = 201;
 
 const data = await authCheck();
 const userId = data.data.userId;
 const profileImage =
     data.data.profileImagePath === undefined
-        ? `${getServerUrl()}${DEFAULT_PROFILE_IMAGE}`
-        : `${getServerUrl()}${data.data.profileImagePath}`;
+        ? `${DEFAULT_PROFILE_IMAGE}`
+        : `${data.data.profileImagePath}`;
 
 const modifyData = {
     password: '',
