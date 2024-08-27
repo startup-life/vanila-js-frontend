@@ -23,7 +23,7 @@ app.get('/', (req, res) => {
     res.redirect('/html/index.html');
 });
 
-if (httpsKeyPath && httpsCertPath) {
+if (process.env.NODE_ENV === 'production') {
     const httpsOptions = {
         key: fs.readFileSync(httpsKeyPath),
         cert: fs.readFileSync(httpsCertPath),
