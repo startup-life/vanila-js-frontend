@@ -59,7 +59,7 @@ export default [
             'yarn.lock',
             '*.md',
             '*.log',
-            'commitlint.config.js',
+            'commitlint.config.cjs',
             '.prettierrc',
             '.git*',
             '.releaserc.json',
