@@ -59,6 +59,9 @@ export default [
             'yarn.lock',
             '*.md',
             '*.log',
+            'commitlint.config.js',
+            '.prettierrc',
+            '.git*',
         ],
     },
 ];
