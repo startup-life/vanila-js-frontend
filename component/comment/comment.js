@@ -43,8 +43,6 @@ const CommentItem = (data, writerId, postId, commentId) => {
             if (textarea.value.length > 1500) {
                 // 1500자를 초과하는 경우, 초과분을 자름
                 textarea.value = textarea.value.substring(0, 1500);
-                // 사용자에게 경고 메시지를 보여주는 방법도 고려할 수 있음
-                // alert('댓글은 1500자를 초과할 수 없습니다.');
             }
         });
 
