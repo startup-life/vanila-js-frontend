@@ -32,5 +32,6 @@ module.exports = {
         'subject-full-stop': [2, 'never', '.'],
         'subject-min-length': [2, 'always', 5],
         'header-max-length': [2, 'always', 72],
+        'body-max-line-length': [0, 'never'], // 1차 릴리즈를 위해 임시로 비활성화
     },
 };
