@@ -1,4 +1,4 @@
-import { padTo2Digits, getServerUrl } from '../../utils/function.js';
+import { padTo2Digits } from '../../utils/function.js';
 
 const BoardItem = (
     postId,
@@ -8,7 +8,7 @@ const BoardItem = (
     imgUrl,
     writer,
     commentCount,
-    like,
+    like
 ) => {
     // 파라미터 값이 없으면 리턴
     if (
@@ -20,7 +20,7 @@ const BoardItem = (
         !imgUrl ||
         !writer
     ) {
-        return;
+        return null;
     }
 
     // 날짜 포맷 변경 YYYY-MM-DD hh:mm:ss

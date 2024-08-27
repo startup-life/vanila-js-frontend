@@ -1,28 +1,23 @@
-import { getServerUrl, getCookie } from '../utils/function.js';
+import { getServerUrl } from '../utils/function.js';
 
 export const userLogin = async (email, password) => {
-    const result = await fetch(`${getServerUrl()}/users/login`, {
+    return fetch(`${getServerUrl()}/users/login`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-            email: email,
-            password: password,
+            email,
+            password,
         }),
     });
-    return result;
 };
 
-export const checkEmail = async email => {
-    const result = fetch(
-        `${getServerUrl()}/users/nickname/check?nickname=${email}`,
-        {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-            },
+export const checkEmail = async (email) => {
+    return fetch(`${getServerUrl()}/users/nickname/check?nickname=${email}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
         },
-    );
-    return result;
+    });
 };

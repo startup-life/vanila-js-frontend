@@ -16,22 +16,23 @@ const nicknameInputElement = document.querySelector('#nickname');
 const profileInputElement = document.querySelector('#profile');
 const withdrawBtnElement = document.querySelector('#withdrawBtn');
 const nicknameHelpElement = document.querySelector(
-    '.inputBox p[name="nickname"]',
+    '.inputBox p[name="nickname"]'
 );
-const resultElement = document.querySelector('.inputBox p[name="result"]');
+// const resultElement = document.querySelector('.inputBox p[name="result"]');
 const modifyBtnElement = document.querySelector('#signupBtn');
 const profilePreview = document.querySelector('#profilePreview');
-const authData = await authCheck();
+const authData = authCheck();
 const changeData = {
     nickname: authData.data.nickname,
     profileImagePath: authData.data.profileImagePath,
 };
 
-const DEFAULT_PROFILE_IMAGE = 'https://express-backend.s3.ap-northeast-2.amazonaws.com/public/image/profile/default.jpg';
+const DEFAULT_PROFILE_IMAGE =
+    'https://express-backend.s3.ap-northeast-2.amazonaws.com/public/image/profile/default.jpg';
 const HTTP_OK = 200;
 const HTTP_CREATED = 201;
 
-const setData = data => {
+const setData = (data) => {
     if (
         data.profileImagePath === DEFAULT_PROFILE_IMAGE ||
         data.profileImagePath === null
@@ -40,15 +41,13 @@ const setData = data => {
     } else {
         profilePreview.src = `${data.profileImagePath}`;
 
-        const profileImagePath = data.profileImagePath;
+        const { profileImagePath } = data;
         const fileName = profileImagePath.split('/').pop();
         localStorage.setItem('profilePath', data.profileImagePath);
 
-        const profileImage = new File(
-            [`${profileImagePath}`],
-            fileName,
-            { type: '' },
-        );
+        const profileImage = new File([`${profileImagePath}`], fileName, {
+            type: '',
+        });
 
         const dataTransfer = new DataTransfer();
         dataTransfer.items.add(profileImage);
@@ -75,7 +74,7 @@ const observeData = () => {
 const changeEventHandler = async (event, uid) => {
     const button = document.querySelector('#signupBtn');
     if (uid == 'nickname') {
-        const value = event.target.value;
+        const { value } = event.target;
         const isValidNickname = validNickname(value);
         const helperElement = nicknameHelpElement;
         let isComplete = false;
@@ -121,10 +120,13 @@ const changeEventHandler = async (event, uid) => {
 
             // 파일 업로드를 위한 POST 요청 실행
             try {
-                const response = await fetch(`${getServerUrl()}/users/upload/profile-image`, {
-                    method: 'POST',
-                    body: formData,
-                });
+                const response = await fetch(
+                    `${getServerUrl()}/users/upload/profile-image`,
+                    {
+                        method: 'POST',
+                        body: formData,
+                    }
+                );
 
                 if (!response.ok) throw new Error('서버 응답 오류');
 
@@ -183,16 +185,16 @@ const deleteAccount = async () => {
     Dialog(
         '회원탈퇴 하시겠습니까?',
         '작성된 게시글과 댓글은 삭제 됩니다.',
-        callback,
+        callback
     );
 };
 
 const addEvent = () => {
-    nicknameInputElement.addEventListener('change', event =>
-        changeEventHandler(event, 'nickname'),
+    nicknameInputElement.addEventListener('change', (event) =>
+        changeEventHandler(event, 'nickname')
     );
-    profileInputElement.addEventListener('change', event =>
-        changeEventHandler(event, 'profile'),
+    profileInputElement.addEventListener('change', (event) =>
+        changeEventHandler(event, 'profile')
     );
     modifyBtnElement.addEventListener('click', async () => sendModifyData());
     withdrawBtnElement.addEventListener('click', async () => deleteAccount());
@@ -227,7 +229,7 @@ const showToast = (message, duration = 3000, callback = null) => {
     }, duration);
 };
 
-const saveToastMessage = message => {
+const saveToastMessage = (message) => {
     sessionStorage.setItem('toastMessage', message);
 };
 

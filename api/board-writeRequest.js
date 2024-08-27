@@ -1,6 +1,6 @@
 import { getServerUrl, getCookie } from '../utils/function.js';
 
-export const createPost = boardData => {
+export const createPost = (boardData) => {
     const result = fetch(`${getServerUrl()}/posts`, {
         method: 'POST',
         body: JSON.stringify(boardData),
@@ -27,7 +27,7 @@ export const updatePost = (postId, boardData) => {
     return result;
 };
 
-export const fileUpload = formData => {
+export const fileUpload = (formData) => {
     const result = fetch(`${getServerUrl()}/posts/upload/attach-file`, {
         method: 'POST',
         body: formData,
@@ -36,7 +36,7 @@ export const fileUpload = formData => {
     return result;
 };
 
-export const getBoardItem = postId => {
+export const getBoardItem = (postId) => {
     const result = fetch(`${getServerUrl()}/posts/${postId}`, {
         method: 'GET',
         headers: {
