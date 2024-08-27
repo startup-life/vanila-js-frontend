@@ -27,7 +27,7 @@ const changeData = {
     profileImagePath: authData.data.profileImagePath,
 };
 
-const DEFAULT_PROFILE_IMAGE = '/public/image/profile/default.jpg';
+const DEFAULT_PROFILE_IMAGE = 'https://express-backend.s3.ap-northeast-2.amazonaws.com/public/image/profile/default.jpg';
 const HTTP_OK = 200;
 const HTTP_CREATED = 201;
 
@@ -36,16 +36,16 @@ const setData = data => {
         data.profileImagePath === DEFAULT_PROFILE_IMAGE ||
         data.profileImagePath === null
     ) {
-        profilePreview.src = `${getServerUrl()}${DEFAULT_PROFILE_IMAGE}`;
+        profilePreview.src = `${DEFAULT_PROFILE_IMAGE}`;
     } else {
-        profilePreview.src = `${getServerUrl()}${data.profileImagePath}`;
+        profilePreview.src = `${data.profileImagePath}`;
 
         const profileImagePath = data.profileImagePath;
         const fileName = profileImagePath.split('/').pop();
         localStorage.setItem('profilePath', data.profileImagePath);
 
         const profileImage = new File(
-            [`${getServerUrl()}${profileImagePath}`],
+            [`${profileImagePath}`],
             fileName,
             { type: '' },
         );
@@ -113,7 +113,7 @@ const changeEventHandler = async (event, uid) => {
         console.log(changeData.profileImagePath);
         if (!file) {
             localStorage.removeItem('profilePath');
-            profilePreview.src = `${getServerUrl()}${DEFAULT_PROFILE_IMAGE}`;
+            profilePreview.src = `${DEFAULT_PROFILE_IMAGE}`;
             changeData.profileImagePath = null;
         } else {
             const formData = new FormData();
@@ -121,7 +121,7 @@ const changeEventHandler = async (event, uid) => {
 
             // 파일 업로드를 위한 POST 요청 실행
             try {
-                const response = await fetch(getServerUrl() + '/users/upload/profile_image', {
+                const response = await fetch(`${getServerUrl()}/users/upload/profile-image`, {
                     method: 'POST',
                     body: formData,
                 });
@@ -131,7 +131,7 @@ const changeEventHandler = async (event, uid) => {
                 const result = await response.json(); // 응답을 JSON으로 변환
                 localStorage.setItem('profilePath', result.data.filePath);
                 changeData.profileImagePath = result.data.filePath;
-                profilePreview.src = getServerUrl() + result.data.filePath;
+                profilePreview.src = `${result.data.filePath}`;
             } catch (error) {
                 console.error('업로드 중 오류 발생:', error);
             }
@@ -245,8 +245,8 @@ const displayToastFromStorage = () => {
 const init = () => {
     const profileImage =
         authData.data.profileImagePath === undefined
-            ? `${getServerUrl()}${DEFAULT_PROFILE_IMAGE}`
-            : `${getServerUrl()}${authData.data.profileImagePath}`;
+            ? `${DEFAULT_PROFILE_IMAGE}`
+            : `${authData.data.profileImagePath}`;
 
     prependChild(document.body, Header('커뮤니티', 2, profileImage));
     setData(authData.data);

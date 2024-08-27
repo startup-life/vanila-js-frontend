@@ -1,10 +1,17 @@
 import express from 'express';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
+import https from 'https';
+import fs from 'fs';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const app = express();
 
-const port = 8080;
+const port = process.env.PORT;
+const httpsKeyPath = process.env.HTTPS_KEY_PATH;
+const httpsCertPath = process.env.HTTPS_CERT_PATH;
 
 // 현재 파일의 URL에서 디렉토리 경로를 추출
 const __filename = fileURLToPath(import.meta.url);
@@ -16,6 +23,17 @@ app.get('/', (req, res) => {
     res.redirect('/html/index.html');
 });
 
-app.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
-});
+if (httpsKeyPath && httpsCertPath) {
+    const httpsOptions = {
+        key: fs.readFileSync(httpsKeyPath),
+        cert: fs.readFileSync(httpsCertPath),
+    };
+
+    https.createServer(httpsOptions, app).listen(port, () => {
+        console.log(`HTTPS Server is running on port ${port}`);
+    });
+} else {
+    app.listen(port, () => {
+        console.log(`HTTP Server is running on port ${port}`);
+    });
+}

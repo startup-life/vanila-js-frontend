@@ -3,7 +3,6 @@ import Header from '../component/header/header.js';
 import {
     authCheck,
     getQueryString,
-    getServerUrl,
     prependChild,
 } from '../utils/function.js';
 import {
@@ -11,6 +10,7 @@ import {
     fileUpload,
     getBoardItem,
     updatePost,
+    getBoardItem,
 } from '../api/board-writeRequest.js';
 
 const HTTP_OK = 200;
@@ -32,6 +32,8 @@ const boardWrite = {
     title: '',
     content: '',
 };
+
+const DEFAULT_PROFILE_IMAGE = 'https://express-backend.s3.ap-northeast-2.amazonaws.com/public/image/profile/default.jpg';
 
 let isModifyMode = false;
 let modifyData = {};
@@ -196,22 +198,21 @@ const addEvent = () => {
 };
 
 const setModifyData = data => {
-    console.log(data);
-    titleInput.value = data[0].post_title;
-    contentInput.value = data[0].post_content;
+    titleInput.value = data.post_title;
+    contentInput.value = data.post_content;
 
-    if (data[0].filePath) {
+    if (data.filePath) {
         // filePath에서 파일 이름만 추출하여 표시
-        const fileName = data[0].filePath.split('/').pop();
+        const fileName = data.filePath.split('/').pop();
         imagePreviewText.innerHTML =
             fileName + `<span class="deleteFile">X</span>`;
         imagePreviewText.style.display = 'block';
-        localStorage.setItem('postFilePath', data[0].filePath);
+        localStorage.setItem('postFilePath', data.filePath);
 
         // 이제 추출된 파일명을 사용하여 File 객체를 생성
         const attachFile = new File(
             // 실제 이미지 데이터 대신 URL을 사용
-            [`${getServerUrl()}${data[0].filePath}`],
+            [`${data.filePath}`],
             // 추출된 파일명
             fileName,
             // MIME 타입 지정, 실제 이미지 타입에 맞게 조정 필요
@@ -226,8 +227,8 @@ const setModifyData = data => {
         imagePreviewText.style.display = 'none';
     }
 
-    boardWrite.title = data[0].post_title;
-    boardWrite.content = data[0].post_content;
+    boardWrite.title = data.post_title;
+    boardWrite.content = data.post_content;
 
     observeSignupData();
 };
@@ -238,8 +239,8 @@ const init = async () => {
 
     const profileImage =
         data.data.profileImagePath === undefined
-            ? `${getServerUrl()}/public/image/profile/default.jpg`
-            : getServerUrl() + data.data.profileImagePath;
+            ? `${DEFAULT_PROFILE_IMAGE}`
+            : `${data.data.profileImagePath}`;
 
     prependChild(document.body, Header('커뮤니티', 1, profileImage));
 

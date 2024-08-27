@@ -38,7 +38,7 @@ export const checkNickname = async nickname => {
 };
 
 export const fileUpload = async file => {
-    const result = await fetch(`${getServerUrl()}/users/upload/profile_image`, {
+    const result = await fetch(`${getServerUrl()}/users/upload/profile-image`, {
         method: 'POST',
         body: file,
     });
