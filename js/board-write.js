@@ -1,15 +1,11 @@
 import Dialog from '../component/dialog/dialog.js';
 import Header from '../component/header/header.js';
-import {
-    authCheck,
-    getQueryString,
-    prependChild,
-} from '../utils/function.js';
+import { authCheck, getQueryString, prependChild } from '../utils/function.js';
 import {
     createPost,
     fileUpload,
-    updatePost,
     getBoardItem,
+    updatePost,
 } from '../api/board-writeRequest.js';
 
 const HTTP_OK = 200;
@@ -24,7 +20,7 @@ const contentInput = document.querySelector('#content');
 const imageInput = document.querySelector('#image');
 const imagePreviewText = document.getElementById('imagePreviewText');
 const contentHelpElement = document.querySelector(
-    '.inputBox p[name="content"]',
+    '.inputBox p[name="content"]'
 );
 
 const boardWrite = {
@@ -32,7 +28,8 @@ const boardWrite = {
     content: '',
 };
 
-const DEFAULT_PROFILE_IMAGE = 'https://express-backend.s3.ap-northeast-2.amazonaws.com/public/image/profile/default.jpg';
+const DEFAULT_PROFILE_IMAGE =
+    'https://express-backend.s3.ap-northeast-2.amazonaws.com/public/image/profile/default.jpg';
 
 let isModifyMode = false;
 let modifyData = {};
@@ -80,8 +77,7 @@ const addBoard = async () => {
             localStorage.removeItem('postFilePath');
             window.location.href = `/html/board.html?id=${data.data.insertId}`;
         } else {
-            const helperElement = contentHelpElement;
-            helperElement.textContent = '제목, 내용을 모두 작성해주세요.';
+            contentHelpElement.textContent = '제목, 내용을 모두 작성해주세요.';
         }
     } else {
         // 게시글 작성 api 호출
@@ -105,7 +101,7 @@ const addBoard = async () => {
 };
 const changeEventHandler = async (event, uid) => {
     if (uid == 'title') {
-        const value = event.target.value;
+        const { value } = event.target;
         const helperElement = contentHelpElement;
         if (!value || value == '') {
             boardWrite[uid] = '';
@@ -119,7 +115,7 @@ const changeEventHandler = async (event, uid) => {
             helperElement.textContent = '';
         }
     } else if (uid == 'content') {
-        const value = event.target.value;
+        const { value } = event.target;
         const helperElement = contentHelpElement;
         if (!value || value == '') {
             boardWrite[uid] = '';
@@ -160,7 +156,7 @@ const changeEventHandler = async (event, uid) => {
     observeSignupData();
 };
 // 수정모드시 사용하는 게시글 단건 정보 가져오기
-const getBoardModifyData = async postId => {
+const getBoardModifyData = async (postId) => {
     const response = await getBoardItem(postId);
     if (!response.ok) throw new Error('서버 응답 오류');
 
@@ -178,31 +174,30 @@ const checkModifyMode = () => {
 // 이벤트 등록
 const addEvent = () => {
     submitButton.addEventListener('click', addBoard);
-    titleInput.addEventListener('input', event =>
-        changeEventHandler(event, 'title'),
+    titleInput.addEventListener('input', (event) =>
+        changeEventHandler(event, 'title')
     );
-    contentInput.addEventListener('input', event =>
-        changeEventHandler(event, 'content'),
+    contentInput.addEventListener('input', (event) =>
+        changeEventHandler(event, 'content')
     );
-    imageInput.addEventListener('change', event =>
-        changeEventHandler(event, 'image'),
+    imageInput.addEventListener('change', (event) =>
+        changeEventHandler(event, 'image')
     );
     if (imagePreviewText !== null) {
-        imagePreviewText.addEventListener('click', event =>
-            changeEventHandler(event, 'imagePreviewText'),
+        imagePreviewText.addEventListener('click', (event) =>
+            changeEventHandler(event, 'imagePreviewText')
         );
     }
 };
 
-const setModifyData = data => {
+const setModifyData = (data) => {
     titleInput.value = data.post_title;
     contentInput.value = data.post_content;
 
     if (data.filePath) {
         // filePath에서 파일 이름만 추출하여 표시
         const fileName = data.filePath.split('/').pop();
-        imagePreviewText.innerHTML =
-            fileName + `<span class="deleteFile">X</span>`;
+        imagePreviewText.innerHTML = `${fileName}<span class="deleteFile">X</span>`;
         imagePreviewText.style.display = 'block';
         localStorage.setItem('postFilePath', data.filePath);
 
@@ -213,7 +208,7 @@ const setModifyData = data => {
             // 추출된 파일명
             fileName,
             // MIME 타입 지정, 실제 이미지 타입에 맞게 조정 필요
-            { type: '' },
+            { type: '' }
         );
 
         const dataTransfer = new DataTransfer();

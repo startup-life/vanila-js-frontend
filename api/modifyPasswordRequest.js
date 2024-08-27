@@ -1,7 +1,7 @@
-import { getServerUrl, getCookie } from '../utils/function.js';
+import { getCookie, getServerUrl } from '../utils/function.js';
 
-export const changePassword = async (userId, password) => {
-    const result = fetch(`${getServerUrl()}/users/${userId}/password`, {
+const changePassword = async (userId, password) => {
+    return fetch(`${getServerUrl()}/users/${userId}/password`, {
         method: 'PATCH',
         headers: {
             'Content-Type': 'application/json',
@@ -12,5 +12,6 @@ export const changePassword = async (userId, password) => {
             password,
         }),
     });
-    return result;
 };
+
+export default changePassword;
