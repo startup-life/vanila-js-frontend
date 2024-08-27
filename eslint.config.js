@@ -62,6 +62,7 @@ export default [
             'commitlint.config.js',
             '.prettierrc',
             '.git*',
+            '.releaserc.json',
         ],
     },
 ];
