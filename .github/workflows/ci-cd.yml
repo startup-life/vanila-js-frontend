@@ -5,6 +5,7 @@ on:
   push:
     branches:
       - main
+      - action
   pull_request:
     branches:
       - main
@@ -35,7 +36,7 @@ jobs:
   deploy:
     needs: build
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main' && success() && secret.SERVER_STATUS == 'true'
+    if: github.ref == 'refs/heads/main' && success() && secrets.SERVER_STATUS == 'true'
 
     steps:
       - name: Checkout repository
