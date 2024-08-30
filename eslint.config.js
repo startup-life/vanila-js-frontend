@@ -63,6 +63,7 @@ export default [
             '.prettierrc',
             '.git*',
             '.releaserc.json',
+            'CHANGELOG.md',
         ],
     },
 ];
