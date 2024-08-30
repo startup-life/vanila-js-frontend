@@ -4,7 +4,7 @@
 
 ### 🐛 BUG FIXES
 
-* eslint, prettier 적용이 안된 부분 수정 ([3d0be51](https://github.com/startup-life/vanila-js-frontend/commit/3d0be51736bc2cbfe76b1254fd735825efc72a39))
+-   eslint, prettier 적용이 안된 부분 수정 ([3d0be51](https://github.com/startup-life/vanila-js-frontend/commit/3d0be51736bc2cbfe76b1254fd735825efc72a39))
 
 ## 1.0.0 (2024-08-27)
 
