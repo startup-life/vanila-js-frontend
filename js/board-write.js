@@ -19,6 +19,8 @@ const HTTP_CREATED = 201;
 const MAX_TITLE_LENGTH = 26;
 const MAX_CONTENT_LENGTH = 1500;
 
+const DEFAULT_PROFILE_IMAGE = '../public/image/profile/default.jpg';
+
 const submitButton = document.querySelector('#submit');
 const titleInput = document.querySelector('#title');
 const contentInput = document.querySelector('#content');
@@ -234,8 +236,8 @@ const init = async () => {
     const modifyId = checkModifyMode();
 
     const profileImage =
-        data.data.profileImagePath === undefined
-            ? `${getServerUrl()}/public/image/profile/default.jpg`
+        data.data.profileImagePath === undefined || data.data.profileImagePath === null
+            ? DEFAULT_PROFILE_IMAGE
             : `${getServerUrl()}${data.data.profileImagePath}`;
 
     prependChild(document.body, Header('커뮤니티', 1, profileImage));
