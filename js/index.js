@@ -3,7 +3,7 @@ import Header from '../component/header/header.js';
 import { authCheck, getServerUrl, prependChild } from '../utils/function.js';
 import { getPosts } from '../api/indexRequest.js';
 
-const DEFAULT_PROFILE_IMAGE = '/public/image/profile/default.jpg';
+const DEFAULT_PROFILE_IMAGE = '../public/image/profile/default.jpg';
 const HTTP_NOT_AUTHORIZED = 401;
 const SCROLL_THRESHOLD = 0.9;
 const INITIAL_OFFSET = 5;
@@ -30,7 +30,7 @@ const setBoardItem = boardData => {
                     data.created_at,
                     data.post_title,
                     data.hits,
-                    data.profileImagePath,
+                    data.profileImagePath === null ? null : data.profileImagePath,
                     data.nickname,
                     data.comment_count,
                     data.like,
@@ -81,11 +81,11 @@ const init = async () => {
         }
 
         const profileImagePath =
-            data.data.profileImagePath ?? DEFAULT_PROFILE_IMAGE;
-        const fullProfileImagePath = `${getServerUrl()}${profileImagePath}`;
+            data.data.profileImagePath === null ? DEFAULT_PROFILE_IMAGE : `${getServerUrl()}${data.data.profileImagePath}`;
+
         prependChild(
             document.body,
-            Header('Community', 0, fullProfileImagePath),
+            Header('Community', 0, profileImagePath),
         );
 
         const boardList = await getBoardItem();

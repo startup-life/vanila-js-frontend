@@ -2,7 +2,7 @@ import { getServerUrl, padTo2Digits } from '../../utils/function.js';
 import Dialog from '../dialog/dialog.js';
 import { deleteComment, updateComment } from '../../api/commentRequest.js';
 
-const DEFAULT_PROFILE_IMAGE = '/public/image/profile/default.jpg';
+const DEFAULT_PROFILE_IMAGE = '../public/image/profile/default.jpg';
 const HTTP_OK = 200;
 
 const CommentItem = (data, writerId, postId, commentId) => {
@@ -94,9 +94,7 @@ const CommentItem = (data, writerId, postId, commentId) => {
 
     const img = document.createElement('img');
     img.className = 'commentImg';
-    img.src =
-        `${getServerUrl()}${data.profileImage}` ||
-        `${getServerUrl()}${DEFAULT_PROFILE_IMAGE}`;
+    img.src = data.profileImage === null ? DEFAULT_PROFILE_IMAGE : `${getServerUrl()}${data.profileImage}`
     picture.appendChild(img);
 
     const commentInfoWrap = document.createElement('div');

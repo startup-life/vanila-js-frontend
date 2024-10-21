@@ -36,7 +36,7 @@ const headerDropdownMenu = () => {
 const Header = (
     title,
     leftBtn = 0,
-    profileImage = `${getServerUrl()}${DEFAULT_PROFILE_IMAGE}`,
+    profileImage = DEFAULT_PROFILE_IMAGE,
 ) => {
     let leftBtnElement;
     let rightBtnElement;

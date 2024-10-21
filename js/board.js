@@ -15,7 +15,7 @@ import {
     getComments,
 } from '../api/boardRequest.js';
 
-const DEFAULT_PROFILE_IMAGE = '/public/image/profile/default.jpg';
+const DEFAULT_PROFILE_IMAGE = '../public/image/profile/default.jpg';
 const MAX_COMMENT_LENGTH = 1000;
 const HTTP_NOT_AUTHORIZED = 401;
 const HTTP_OK = 200;
@@ -48,7 +48,7 @@ const setBoardDetail = data => {
 
     imgElement.src =
         data.profileImage === undefined || data.profileImage === null
-            ? `${getServerUrl()}${DEFAULT_PROFILE_IMAGE}`
+            ? DEFAULT_PROFILE_IMAGE
             : `${getServerUrl()}${data.profileImage}`;
 
     nicknameElement.textContent = data.nickname;
@@ -186,8 +186,8 @@ const init = async () => {
             window.location.href = '/html/login.html';
         }
         const profileImage =
-            data.data.profileImagePath === undefined
-                ? `${getServerUrl()}${DEFAULT_PROFILE_IMAGE}`
+            data.data.profileImagePath === undefined || data.data.profileImagePath === null
+                ? DEFAULT_PROFILE_IMAGE
                 : `${getServerUrl()}${data.data.profileImagePath}`;
 
         prependChild(document.body, Header('커뮤니티', 2, profileImage));

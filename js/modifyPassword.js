@@ -11,14 +11,14 @@ import {
 
 const button = document.querySelector('#signupBtn');
 
-const DEFAULT_PROFILE_IMAGE = '/public/image/profile/default.jpg';
+const DEFAULT_PROFILE_IMAGE = '../public/image/profile/default.jpg';
 const HTTP_CREATED = 201;
 
 const data = await authCheck();
 const userId = data.data.userId;
 const profileImage =
-    data.data.profileImagePath === undefined
-        ? `${getServerUrl()}${DEFAULT_PROFILE_IMAGE}`
+    data.data.profileImagePath === undefined || data.data.profileImagePath === null
+        ? DEFAULT_PROFILE_IMAGE
         : `${getServerUrl()}${data.data.profileImagePath}`;
 
 const modifyData = {

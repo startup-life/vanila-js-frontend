@@ -27,16 +27,16 @@ const changeData = {
     profileImagePath: authData.data.profileImagePath,
 };
 
-const DEFAULT_PROFILE_IMAGE = '/public/image/profile/default.jpg';
+const DEFAULT_PROFILE_IMAGE = '../public/image/profile/default.jpg';
 const HTTP_OK = 200;
 const HTTP_CREATED = 201;
 
 const setData = data => {
     if (
-        data.profileImagePath === DEFAULT_PROFILE_IMAGE ||
+        // data.profileImagePath === DEFAULT_PROFILE_IMAGE ||
         data.profileImagePath === null
     ) {
-        profilePreview.src = `${getServerUrl()}${DEFAULT_PROFILE_IMAGE}`;
+        profilePreview.src = DEFAULT_PROFILE_IMAGE;
     } else {
         profilePreview.src = `${getServerUrl()}${data.profileImagePath}`;
 
@@ -113,7 +113,7 @@ const changeEventHandler = async (event, uid) => {
         console.log(changeData.profileImagePath);
         if (!file) {
             localStorage.removeItem('profilePath');
-            profilePreview.src = `${getServerUrl()}${DEFAULT_PROFILE_IMAGE}`;
+            profilePreview.src = DEFAULT_PROFILE_IMAGE;
             changeData.profileImagePath = null;
         } else {
             const formData = new FormData();
@@ -244,8 +244,8 @@ const displayToastFromStorage = () => {
 
 const init = () => {
     const profileImage =
-        authData.data.profileImagePath === undefined
-            ? `${getServerUrl()}${DEFAULT_PROFILE_IMAGE}`
+        authData.data.profileImagePath === null || authData.data.profileImagePath === undefined
+            ? DEFAULT_PROFILE_IMAGE
             : `${getServerUrl()}${authData.data.profileImagePath}`;
 
     prependChild(document.body, Header('커뮤니티', 2, profileImage));
