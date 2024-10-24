@@ -102,7 +102,7 @@ const onChangeHandler = (event, uid) => {
 };
 
 const validateEmail = input => {
-    const regex = /^[A-Za-z0-9@.]+$/;
+    const regex = /^[A-Za-z0-9@._-]+$/;
     if (!regex.test(input.value)) input.value = input.value.slice(0, -1);
 };
 

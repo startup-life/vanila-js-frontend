@@ -4,7 +4,7 @@ export const getServerUrl = () => {
     const host = window.location.hostname;
     return host.includes('localhost')
         ? 'http://localhost:3000'
-        : 'https://node-community-api.startupcode.kr:443';
+        : 'https://edu-community-api.tetricode.com';
 };
 
 export const setCookie = (cookie_name, value, days) => {
@@ -55,7 +55,6 @@ export const authCheck = async () => {
         location.href = '/html/login.html';
     }
 
-    // const data = await serverSessionCheck();
     const response = await serverSessionCheck();
     if (!response || response.status !== HTTP_OK) {
         deleteCookie('session');

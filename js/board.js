@@ -181,7 +181,7 @@ const init = async () => {
         textareaElement.addEventListener('input', inputComment);
         commentBtnElement.addEventListener('click', addComment);
         commentBtnElement.disabled = true;
-        console.log(myInfo);
+
         if (data.status === HTTP_NOT_AUTHORIZED) {
             window.location.href = '/html/login.html';
         }
