@@ -77,7 +77,7 @@ const addBoard = async () => {
 
         const data = await response.json();
 
-        if (data.status === HTTP_CREATED) {
+        if (response.status === HTTP_CREATED) {
             localStorage.removeItem('postFilePath');
             window.location.href = `/html/board.html?id=${data.data.insertId}`;
         } else {
@@ -94,9 +94,7 @@ const addBoard = async () => {
         const response = await updatePost(post_id, setData);
         if (!response.ok) throw new Error('서버 응답 오류');
 
-        const data = await response.json();
-
-        if (data.status == HTTP_OK) {
+        if (response.status === HTTP_OK) {
             localStorage.removeItem('postFilePath');
             window.location.href = `/html/board.html?id=${post_id}`;
         } else {
@@ -232,7 +230,8 @@ const setModifyData = data => {
 };
 
 const init = async () => {
-    const data = await authCheck();
+    const dataResponse = await authCheck();
+    const data = await dataResponse.json();
     const modifyId = checkModifyMode();
 
     const profileImage =

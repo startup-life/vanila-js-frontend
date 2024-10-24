@@ -21,7 +21,8 @@ const nicknameHelpElement = document.querySelector(
 const resultElement = document.querySelector('.inputBox p[name="result"]');
 const modifyBtnElement = document.querySelector('#signupBtn');
 const profilePreview = document.querySelector('#profilePreview');
-const authData = await authCheck();
+const authDataReponse = await authCheck();
+const authData = await authDataReponse.json();
 const changeData = {
     nickname: authData.data.nickname,
     profileImagePath: authData.data.profileImagePath,
@@ -86,8 +87,7 @@ const changeEventHandler = async (event, uid) => {
                 '*닉네임은 2~10자의 영문자, 한글 또는 숫자만 사용할 수 있습니다. 특수 문자와 띄어쓰기는 사용할 수 없습니다.';
         } else {
             const response = await checkEmail(value);
-            const responseData = await response.json();
-            if (responseData.status === HTTP_OK) {
+            if (response.status === HTTP_OK) {
                 helperElement.textContent = '';
                 isComplete = true;
             } else if (authData.data.nickname === value) {
@@ -149,9 +149,8 @@ const sendModifyData = async () => {
             Dialog('필수 정보 누락', '닉네임을 입력해주세요.');
         } else {
             const response = await userModify(userId, changeData);
-            const data = await response.json();
 
-            if (data.status == HTTP_CREATED) {
+            if (response.status === HTTP_CREATED) {
                 localStorage.removeItem('profilePath');
                 saveToastMessage('수정완료');
                 location.href = '/html/modifyInfo.html';
@@ -168,10 +167,9 @@ const sendModifyData = async () => {
 const deleteAccount = async () => {
     const userId = getCookie('userId');
     const callback = async () => {
-        const res = await userDelete(userId);
-        const data = await res.json();
+        const response = await userDelete(userId);
 
-        if (data.status === HTTP_OK) {
+        if (response.status === HTTP_OK) {
             deleteCookie('session');
             deleteCookie('userId');
             location.href = '/html/login.html';

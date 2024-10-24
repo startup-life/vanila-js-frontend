@@ -33,7 +33,7 @@ const loginClick = async () => {
     }
 
     const result = await response.json();
-    if (result.status !== HTTP_OK) {
+    if (response.status !== HTTP_OK) {
         updateHelperText(
             helperTextElement,
             '*입력하신 계정 정보가 정확하지 않았습니다.',

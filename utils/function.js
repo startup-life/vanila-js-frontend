@@ -45,33 +45,31 @@ export const serverSessionCheck = async () => {
             userId: getCookie('userId'),
         },
     });
-    const data = await res.json();
-    return data;
+    return res;
 };
 
 export const authCheck = async () => {
     const HTTP_OK = 200;
     const session = getCookie('session');
     if (session === undefined) {
-        // Dialog('로그인이 필요합니다.', '로그인 페이지로 이동합니다.');
         location.href = '/html/login.html';
     }
 
-    const data = await serverSessionCheck();
-
-    if (!data || data.status !== HTTP_OK) {
+    // const data = await serverSessionCheck();
+    const response = await serverSessionCheck();
+    if (!response || response.status !== HTTP_OK) {
         deleteCookie('session');
         deleteCookie('userId');
-        // Dialog('로그인이 필요합니다.', '로그인 페이지로 이동합니다.');
         location.href = '/html/login.html';
     }
-    return data;
+    return response;
 };
 
 export const authCheckReverse = async () => {
     const session = getCookie('session');
     if (session) {
-        const data = await serverSessionCheck();
+        const response = await serverSessionCheck();
+        const data = await response.json();
         if (data) {
             location.href = '/';
         }

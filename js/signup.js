@@ -48,11 +48,8 @@ const sendSignupData = async () => {
     // signupData를 서버로 전송
     const response = await userSignup(props);
 
-    // 서버로부터 응답을 받음
-    const result = await response.json();
-
     // 응답이 성공적으로 왔을 경우
-    if (result.status == HTTP_CREATED) {
+    if (response.status === HTTP_CREATED) {
         localStorage.removeItem('profilePath');
         location.href = '/html/login.html';
     } else {
@@ -99,8 +96,7 @@ const inputEventHandler = async (event, uid) => {
                 '*올바른 이메일 주소 형식을 입력해주세요. (예: example@example.com)';
         } else {
             const response = await checkEmail(value);
-            const responseData = await response.json();
-            if (responseData.status === HTTP_OK) {
+            if (response.status === HTTP_OK) {
                 helperElement.textContent = '';
                 isComplete = true;
             } else {
@@ -171,9 +167,8 @@ const inputEventHandler = async (event, uid) => {
                 '*닉네임에 특수 문자는 사용할 수 없습니다.';
         } else {
             const response = await checkNickname(value);
-            const responseData = await response.json();
 
-            if (responseData.status == HTTP_OK) {
+            if (response.status === HTTP_OK) {
                 helperElement.textContent = '';
                 isComplete = true;
             } else {
@@ -238,7 +233,7 @@ const uploadProfileImage = () => {
             }
 
             const formData = new FormData();
-            formData.append('attachFile', file);
+            formData.append('profileImage', file);
 
             // 파일 업로드를 위한 POST 요청 실행
             try {

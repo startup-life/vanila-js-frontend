@@ -14,7 +14,8 @@ const button = document.querySelector('#signupBtn');
 const DEFAULT_PROFILE_IMAGE = '../public/image/profile/default.jpg';
 const HTTP_CREATED = 201;
 
-const data = await authCheck();
+const dataResponse = await authCheck();
+const data = await dataResponse.json();
 const userId = data.data.userId;
 const profileImage =
     data.data.profileImagePath === undefined || data.data.profileImagePath === null
@@ -97,9 +98,8 @@ const modifyPassword = async () => {
     const { password } = modifyData;
 
     const response = await changePassword(userId, password);
-    const responseData = await response.json();
 
-    if (responseData.status == HTTP_CREATED) {
+    if (response.status == HTTP_CREATED) {
         deleteCookie('session');
         deleteCookie('userId');
         localStorage.clear();

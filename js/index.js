@@ -74,8 +74,9 @@ const addInfinityScrollEvent = () => {
 
 const init = async () => {
     try {
-        const data = await authCheck();
-        if (data.status === HTTP_NOT_AUTHORIZED) {
+        const response = await authCheck();
+        const data = await response.json();
+        if (response.status === HTTP_NOT_AUTHORIZED) {
             window.location.href = '/html/login.html';
             return;
         }

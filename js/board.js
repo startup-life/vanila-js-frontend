@@ -112,7 +112,7 @@ const getBoardComment = async id => {
     const response = await getComments(id);
     if (!response.ok) return [];
     const data = await response.json();
-    if (data.status != HTTP_OK) return [];
+    if (response.status !== HTTP_OK) return [];
     return data.data;
 };
 
@@ -167,8 +167,9 @@ const inputComment = async () => {
 
 const init = async () => {
     try {
-        const myInfoResult = await authCheck();
-        if (myInfoResult.status !== HTTP_OK) {
+        const data = await authCheck();
+        const myInfoResult = await data.json();
+        if (data.status !== HTTP_OK) {
             throw new Error('사용자 정보를 불러오는데 실패하였습니다.');
         }
 
@@ -180,15 +181,14 @@ const init = async () => {
         textareaElement.addEventListener('input', inputComment);
         commentBtnElement.addEventListener('click', addComment);
         commentBtnElement.disabled = true;
-
-        const data = await authCheck();
+        console.log(myInfo);
         if (data.status === HTTP_NOT_AUTHORIZED) {
             window.location.href = '/html/login.html';
         }
         const profileImage =
-            data.data.profileImagePath === undefined || data.data.profileImagePath === null
+            myInfo.profileImagePath === undefined || myInfo.profileImagePath === null
                 ? DEFAULT_PROFILE_IMAGE
-                : `${getServerUrl()}${data.data.profileImagePath}`;
+                : `${getServerUrl()}${myInfo.profileImagePath}`;
 
         prependChild(document.body, Header('커뮤니티', 2, profileImage));
 

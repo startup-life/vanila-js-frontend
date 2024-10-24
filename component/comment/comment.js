@@ -17,8 +17,7 @@ const CommentItem = (data, writerId, postId, commentId) => {
                     return;
                 }
 
-                const responseData = await response.json();
-                if (responseData.status === HTTP_OK)
+                if (response.status === HTTP_OK)
                     location.href = '/html/board.html?id=' + postId;
             },
         );
