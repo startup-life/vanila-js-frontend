@@ -4,8 +4,7 @@ export const getPost = postId => {
     const result = fetch(`${getServerUrl()}/posts/${postId}`, {
         method: 'GET',
         headers: {
-            session: getCookie('session'),
-            userid: getCookie('userId'),
+            'Authorization': `Bearer ${getCookie('accessToken')}`,
         },
         noCORS: true,
     });
@@ -16,8 +15,7 @@ export const deletePost = async postId => {
     const result = await fetch(`${getServerUrl()}/posts/${postId}`, {
         method: 'DELETE',
         headers: {
-            session: getCookie('session'),
-            userId: getCookie('userId'),
+            'Authorization': `Bearer ${getCookie('accessToken')}`,
         },
     });
     return result;
@@ -28,8 +26,7 @@ export const writeComment = async (pageId, comment) => {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            session: getCookie('session'),
-            userId: getCookie('userId'),
+            'Authorization': `Bearer ${getCookie('accessToken')}`,
         },
         body: JSON.stringify({ commentContent: comment }),
     });
@@ -39,8 +36,7 @@ export const writeComment = async (pageId, comment) => {
 export const getComments = async postId => {
     const result = await fetch(`${getServerUrl()}/posts/${postId}/comments`, {
         headers: {
-            session: getCookie('session'),
-            userId: getCookie('userId'),
+            'Authorization': `Bearer ${getCookie('accessToken')}`,
         },
         noCORS: true,
     });

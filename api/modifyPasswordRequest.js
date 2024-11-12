@@ -5,8 +5,7 @@ export const changePassword = async (userId, password) => {
         method: 'PATCH',
         headers: {
             'Content-Type': 'application/json',
-            session: getCookie('session'),
-            userid: userId,
+            'Authorization': `Bearer ${getCookie('accessToken')}`,
         },
         body: JSON.stringify({
             password,

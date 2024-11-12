@@ -7,7 +7,7 @@ import {
     getServerUrl,
     getCookie,
     deleteCookie,
-    validNickname,
+    validNickname, getUserIdFromToken,
 } from '../utils/function.js';
 import { userModify, userDelete } from '../api/modifyInfoRequest.js';
 
@@ -141,7 +141,7 @@ const changeEventHandler = async (event, uid) => {
 };
 
 const sendModifyData = async () => {
-    const userId = getCookie('userId');
+    const userId = getUserIdFromToken(getCookie('accessToken'));
     const button = document.querySelector('#signupBtn');
 
     if (!button.disabled) {
@@ -165,7 +165,7 @@ const sendModifyData = async () => {
 
 // 회원 탈퇴
 const deleteAccount = async () => {
-    const userId = getCookie('userId');
+    const userId = getUserIdFromToken(getCookie('accessToken'));
     const callback = async () => {
         const response = await userDelete(userId);
 

@@ -42,8 +42,7 @@ const loginClick = async () => {
     }
     updateHelperText(helperTextElement);
 
-    setCookie('session', result.data.sessionId, 14);
-    setCookie('userId', result.data.userId, 14);
+    setCookie('accessToken', result.data.accessToken, 14);
     location.href = '/html/index.html';
 };
 
