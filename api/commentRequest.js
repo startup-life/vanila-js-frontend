@@ -6,8 +6,7 @@ export const deleteComment = (postId, commentId) => {
         {
             method: 'DELETE',
             headers: {
-                session: getCookie('session'),
-                userid: getCookie('userId'),
+                'Authorization': `Bearer ${getCookie('accessToken')}`,
             },
         },
     );
@@ -21,8 +20,7 @@ export const updateComment = (postId, commentId, commentContent) => {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
-                session: getCookie('session'),
-                userid: getCookie('userId'),
+                'Authorization': `Bearer ${getCookie('accessToken')}`,
             },
             body: JSON.stringify(commentContent),
         },

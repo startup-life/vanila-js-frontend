@@ -5,8 +5,7 @@ export const userModify = async (userId, changeData) => {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
-            session: getCookie('session'),
-            userid: userId,
+            'Authorization': `Bearer ${getCookie('accessToken')}`,
         },
         body: JSON.stringify(changeData),
     });
@@ -18,8 +17,7 @@ export const userDelete = async userId => {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',
-            session: getCookie('session'),
-            userid: userId,
+            'Authorization': `Bearer ${getCookie('accessToken')}`,
         },
     });
     return result;

@@ -6,8 +6,7 @@ export const createPost = boardData => {
         body: JSON.stringify(boardData),
         headers: {
             'Content-Type': 'application/json',
-            session: getCookie('session'),
-            userid: getCookie('userId'),
+            'Authorization': `Bearer ${getCookie('accessToken')}`,
         },
     });
     return result;
@@ -19,8 +18,7 @@ export const updatePost = (postId, boardData) => {
         body: JSON.stringify(boardData),
         headers: {
             'Content-Type': 'application/json',
-            session: getCookie('session'),
-            userid: getCookie('userId'),
+            'Authorization': `Bearer ${getCookie('accessToken')}`,
         },
     });
 
@@ -40,8 +38,7 @@ export const getBoardItem = postId => {
     const result = fetch(`${getServerUrl()}/posts/${postId}`, {
         method: 'GET',
         headers: {
-            session: getCookie('session'),
-            userid: getCookie('userId'),
+            'Authorization': `Bearer ${getCookie('accessToken')}`,
         },
         noCORS: true,
     });

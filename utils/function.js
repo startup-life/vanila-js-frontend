@@ -37,36 +37,44 @@ export const deleteCookie = cookie_name => {
     setCookie(cookie_name, '', -1);
 };
 
+export const getUserIdFromToken = token => {
+    // JWT의 두 번째 부분(Payload)을 분리
+    const payload = token.split('.')[1];
+    // base64 디코딩 후 JSON 파싱
+    const decodedPayload = JSON.parse(atob(payload));
+    return decodedPayload.userId; // userId 추출
+};
+
 export const serverSessionCheck = async () => {
-    const res = await fetch(`${getServerUrl()}/users/auth/check`, {
+    const accessToken = getCookie('accessToken');
+    const userId = getUserIdFromToken(accessToken);
+    const response = await fetch(`${getServerUrl()}/users/${userId}`, {
         method: 'GET',
         headers: {
-            session: getCookie('session'),
-            userId: getCookie('userId'),
+            Authorization: `Bearer ${getCookie('accessToken')}`,
         },
     });
-    return res;
+    return response;
 };
 
 export const authCheck = async () => {
     const HTTP_OK = 200;
-    const session = getCookie('session');
-    if (session === undefined) {
+    const accessToken = getCookie('accessToken');
+    if (accessToken === undefined) {
         location.href = '/html/login.html';
     }
 
     const response = await serverSessionCheck();
     if (!response || response.status !== HTTP_OK) {
-        deleteCookie('session');
-        deleteCookie('userId');
+        deleteCookie('accessToken');
         location.href = '/html/login.html';
     }
     return response;
 };
 
 export const authCheckReverse = async () => {
-    const session = getCookie('session');
-    if (session) {
+    const accessToken = getCookie('accessToken');
+    if (accessToken) {
         const response = await serverSessionCheck();
         const data = await response.json();
         if (data) {
@@ -74,6 +82,7 @@ export const authCheckReverse = async () => {
         }
     }
 };
+
 // 이메일 유효성 검사
 export const validEmail = email => {
     const REGEX =

@@ -16,8 +16,13 @@ const headerDropdownMenu = () => {
     modifyInfoLink.href = '/html/modifyInfo.html';
     modifyPasswordLink.href = '/html/modifyPassword.html';
     logoutLink.addEventListener('click', () => {
-        deleteCookie('session');
-        deleteCookie('userId');
+        const response = fetch(`${getServerUrl()}/users/logout`, {
+            method: 'POST',
+            headers: {
+                Authorization: `Bearer ${getCookie('accessToken')}`,
+            },
+        });
+        deleteCookie('accessToken');
         location.href = '/html/login.html';
     });
 
@@ -58,7 +63,7 @@ const Header = (
     }
 
     if (profileImage) {
-        if (getCookie('session')) {
+        if (getCookie('accessToken')) {
             rightBtnElement = document.createElement('div');
             rightBtnElement.classList.add('profile');
 
