@@ -16,6 +16,12 @@ const headerDropdownMenu = () => {
     modifyInfoLink.href = '/html/modifyInfo.html';
     modifyPasswordLink.href = '/html/modifyPassword.html';
     logoutLink.addEventListener('click', () => {
+        const response = fetch(`${getServerUrl()}/users/logout`, {
+            method: 'POST',
+            headers: {
+                Authorization: `Bearer ${getCookie('accessToken')}`,
+            },
+        });
         deleteCookie('accessToken');
         location.href = '/html/login.html';
     });
